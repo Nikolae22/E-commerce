@@ -1,7 +1,7 @@
 package com.ecom.order.domain.user.vo;
 
 import com.ecom.shared.error.domain.Assert;
-import lombok.Builder;
+import org.jilt.Builder;
 
 @Builder
 public record UserAddress(

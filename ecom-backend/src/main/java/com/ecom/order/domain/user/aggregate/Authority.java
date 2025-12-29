@@ -2,10 +2,11 @@ package com.ecom.order.domain.user.aggregate;
 
 import com.ecom.order.domain.user.vo.AuthorityName;
 import com.ecom.shared.error.domain.Assert;
+import lombok.Getter;
 import org.jilt.Builder;
 
+@Getter
 @Builder
-@lombok.Builder
 public class Authority {
 
     private AuthorityName name;
@@ -15,7 +16,4 @@ public class Authority {
         this.name = authorityName;
     }
 
-    public AuthorityName getName() {
-        return name;
-    }
 }

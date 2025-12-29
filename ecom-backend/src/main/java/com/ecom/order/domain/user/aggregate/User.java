@@ -70,89 +70,38 @@ public class User {
     }
 
 
-    // e con lombok che jilt non funziona
-    public static User fromTokenAttributes(
-            Map<String, Object> attributes,
-            List<String> rolesFromAccessToken
-    ) {
+    public static User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
+        com.ecom.order.domain.user.aggregate.UserBuilder userBuilder= com.ecom.order.domain.user.aggregate.UserBuilder.user();
 
-        User.UserBuilder userBuilder = User.builder();
-
-        if (attributes.containsKey("preferred_email")) {
-            userBuilder.email(
-                    new UserEmail(attributes.get("preferred_email").toString())
-            );
+        if(attributes.containsKey("preferred_email")) {
+            userBuilder.email(new UserEmail(attributes.get("preferred_email").toString()));
         }
 
-        if (attributes.containsKey("last_name")) {
-            userBuilder.lastname(
-                    new UserLastname(attributes.get("last_name").toString())
-            );
+        if(attributes.containsKey("last_name")) {
+            userBuilder.lastname(new UserLastname(attributes.get("last_name").toString()));
         }
 
-        if (attributes.containsKey("first_name")) {
-            userBuilder.firstname(
-                    new UserFirstname(attributes.get("first_name").toString())
-            );
+        if(attributes.containsKey("first_name")) {
+            userBuilder.firstname(new UserFirstname(attributes.get("first_name").toString()));
         }
 
-        if (attributes.containsKey("picture")) {
-            userBuilder.imageUrl(
-                    new UserImageUrl(attributes.get("picture").toString())
-            );
+        if(attributes.containsKey("picture")) {
+            userBuilder.imageUrl(new UserImageUrl(attributes.get("picture").toString()));
         }
 
-        if (attributes.containsKey("last_signed_in")) {
-            userBuilder.lastSeen(
-                    Instant.parse(attributes.get("last_signed_in").toString())
-            );
+        if(attributes.containsKey("last_signed_in")) {
+            userBuilder.lastSeen(Instant.parse(attributes.get("last_signed_in").toString()));
         }
 
-        Set<Authority> authorities = rolesFromAccessToken.stream()
-                .map(role ->
-                        Authority.builder()
-                                .name(new AuthorityName(role))
-                                .build()
-                )
+        Set<Authority> authorities = rolesFromAccessToken
+                .stream()
+                .map(authority -> AuthorityBuilder.authority().name(new AuthorityName(authority)).build())
                 .collect(Collectors.toSet());
 
         userBuilder.authorities(authorities);
 
         return userBuilder.build();
     }
-
-//    public static User fromTokenAttributes(Map<String, Object> attributes, List<String> rolesFromAccessToken) {
-//
-//
-//        if(attributes.containsKey("preferred_email")) {
-//            userBuilder.email(new UserEmail(attributes.get("preferred_email").toString()));
-//        }
-//
-//        if(attributes.containsKey("last_name")) {
-//            userBuilder.lastname(new UserLastname(attributes.get("last_name").toString()));
-//        }
-//
-//        if(attributes.containsKey("first_name")) {
-//            userBuilder.firstname(new UserFirstname(attributes.get("first_name").toString()));
-//        }
-//
-//        if(attributes.containsKey("picture")) {
-//            userBuilder.imageUrl(new UserImageUrl(attributes.get("picture").toString()));
-//        }
-//
-//        if(attributes.containsKey("last_signed_in")) {
-//            userBuilder.lastSeen(Instant.parse(attributes.get("last_signed_in").toString()));
-//        }
-//
-//        Set<Authority> authorities = rolesFromAccessToken
-//                .stream()
-//                .map(authority -> AuthorityBuilder.authority().name(new AuthorityName(authority)).build())
-//                .collect(Collectors.toSet());
-//
-//        userBuilder.authorities(authorities);
-//
-//        return userBuilder.build();
-//    }
 
     public UserLastname getLastname() {
         return lastname;
