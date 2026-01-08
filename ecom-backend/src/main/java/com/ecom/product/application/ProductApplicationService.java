@@ -1,6 +1,7 @@
 package com.ecom.product.application;
 
 import com.ecom.product.domain.aggregate.Category;
+import com.ecom.product.domain.aggregate.FilterQuery;
 import com.ecom.product.domain.aggregate.Product;
 import com.ecom.product.domain.repository.CategoryRepository;
 import com.ecom.product.domain.repository.ProductRepository;
@@ -76,5 +77,10 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public Page<Product> findRelated(Pageable pageable,PublicId productPublicId){
         return  productShop.findRelated(pageable,productPublicId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Product> filter(Pageable pageable, FilterQuery query){
+        return productShop.filter(pageable,query);
     }
 }

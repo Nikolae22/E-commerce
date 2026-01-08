@@ -6,6 +6,7 @@ import { AdminProduct } from './admin/product/admin-product/admin-product';
 import { CreateProduct } from './admin/product/create-product/create-product';
 import { Home } from './home/home';
 import {ProductDetail} from './shop/product-detail/product-detail';
+import {Products} from './shop/products/products';
 
 export const routes: Routes = [
     {
@@ -47,6 +48,10 @@ export const routes: Routes = [
   {
     path: 'product/:publicId',
     component: ProductDetail
+  },
+  {
+    path: 'products',
+    component: Products
   },
   {
     path: 'we',

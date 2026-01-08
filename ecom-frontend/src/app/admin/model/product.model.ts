@@ -1,4 +1,4 @@
-import { FormControl } from "@angular/forms";
+import {FormControl, FormRecord} from "@angular/forms";
 
 
 export type ProductSizes= 'XS' | 'S' | 'M' | 'L' | 'XL'|'XXL';
@@ -46,4 +46,22 @@ export type CreateProductFormContent={
     featured:FormControl<boolean>,
     pictures:FormControl<ProductPicture[]>,
     stock:FormControl<number>
+}
+
+export  interface  ProductFilter{
+  size?:string;
+  category?:string |null;
+  sort:string[]
+}
+
+export type FilterProductsFormContent={
+  sort:FormControl<string>;
+  size:FormRecord<FormControl<boolean>>
+}
+
+export  interface ProductFilterForm{
+  size?:{
+    [size:string]:boolean;
+  }| undefined;
+  sort:string;
 }

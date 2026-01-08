@@ -1,5 +1,6 @@
 package com.ecom.product.domain.repository;
 
+import com.ecom.product.domain.aggregate.FilterQuery;
 import com.ecom.product.domain.aggregate.Product;
 import com.ecom.product.domain.vo.PublicId;
 import org.springframework.data.domain.Page;
@@ -22,5 +23,7 @@ public interface ProductRepository {
     Page<Product> findByCategoryExcludingOne(Pageable pageable,
                                              PublicId categoryPublicId,
                                              PublicId productPublicId);
+
+    Page<Product> findByCategoryAndSize(Pageable pageable, FilterQuery filterQuery);
 }
 

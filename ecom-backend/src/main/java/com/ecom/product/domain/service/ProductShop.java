@@ -1,5 +1,6 @@
 package com.ecom.product.domain.service;
 
+import com.ecom.product.domain.aggregate.FilterQuery;
 import com.ecom.product.domain.aggregate.Product;
 import com.ecom.product.domain.repository.ProductRepository;
 import com.ecom.product.domain.vo.PublicId;
@@ -32,5 +33,9 @@ public class ProductShop {
                     "No product found with id %s",productPublicId
             ));
         }
+    }
+
+    public Page<Product> filter(Pageable pageable, FilterQuery query){
+        return productRepository.findByCategoryAndSize(pageable,query);
     }
 }

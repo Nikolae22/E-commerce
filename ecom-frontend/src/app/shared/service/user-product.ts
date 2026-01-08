@@ -1,4 +1,4 @@
-import { Product } from '../../admin/model/product.model';
+import {Product, ProductCategory, ProductFilter} from '../../admin/model/product.model';
 import { createPaginationOption, Page } from '../modal/request.modal';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -29,4 +29,20 @@ export class UserProduct {
     return this.http.get<Page<Product>>(`${environment.apiUrl}/products-shop/related`,{params})
   }
 
+  findAllCategories():Observable<Page<ProductCategory>> {
+    return this.http.get<Page<ProductCategory>>(`${environment.apiUrl}/categories`)
+  }
+
+
+  filter(pageRequest:Pagination,productFilter:ProductFilter):Observable<Page<Product>>{
+    let params = createPaginationOption(pageRequest);
+    if (productFilter.category){
+      params=params.append('categoryId',productFilter.category);
+    }
+    if (productFilter.size){
+      params=params.append('productSizes',productFilter.size)
+    }
+    return this.http.get<Page<Product>>(`${environment.apiUrl}/products-shop/filter`,{params});
+
+  }
 }

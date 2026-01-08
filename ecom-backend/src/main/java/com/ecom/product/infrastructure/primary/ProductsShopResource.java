@@ -1,7 +1,9 @@
 package com.ecom.product.infrastructure.primary;
 
 import com.ecom.product.application.ProductApplicationService;
+import com.ecom.product.domain.aggregate.FilterQueryBuilder;
 import com.ecom.product.domain.aggregate.Product;
+import com.ecom.product.domain.vo.ProductSize;
 import com.ecom.product.domain.vo.PublicId;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -61,6 +64,23 @@ public class ProductsShopResource {
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().build();
         }
+    }
 
+    @GetMapping("/filter")
+    public ResponseEntity<Page<RestProduct>> filter(Pageable pageable,
+                                                    @RequestParam("categoryId")UUID categoryId,
+                                                    @RequestParam(value = "productSizes",required = false)
+                                                    List<ProductSize> productSizes){
+        FilterQueryBuilder filterQueryBuilder=FilterQueryBuilder.filterQuery().categoryId(new PublicId(categoryId));
+        if (productSizes !=null){
+            filterQueryBuilder.sizes(productSizes);
+        }
+
+        Page<Product> products = productApplicationService.filter(pageable, filterQueryBuilder.build());
+        PageImpl<RestProduct> restProducts = new PageImpl<>(
+                products.getContent().stream().map(RestProduct::fromDomain).toList(),
+                pageable, products.getTotalElements()
+        );
+        return ResponseEntity.ok(restProducts);
     }
 }
