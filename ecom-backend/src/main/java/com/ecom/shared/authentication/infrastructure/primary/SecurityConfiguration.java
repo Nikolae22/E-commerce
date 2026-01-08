@@ -2,6 +2,7 @@ package com.ecom.shared.authentication.infrastructure.primary;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +18,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain httpSecurity(HttpSecurity httpSecurity){
         return httpSecurity
                 .authorizeHttpRequests(authorize->authorize
+                        .requestMatchers(HttpMethod.GET,"api/categories").permitAll()
+                        .requestMatchers(HttpMethod.GET,"api/products-shop/**").permitAll()
                         .requestMatchers("/api/**").authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2->oauth2.jwt(
