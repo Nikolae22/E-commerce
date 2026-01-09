@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -82,5 +83,10 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public Page<Product> filter(Pageable pageable, FilterQuery query){
         return productShop.filter(pageable,query);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds){
+        return productCRUD.findAllByPublicIdIn(publicIds);
     }
 }

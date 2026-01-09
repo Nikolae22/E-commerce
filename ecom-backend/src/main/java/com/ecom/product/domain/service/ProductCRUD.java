@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -36,5 +37,9 @@ public class ProductCRUD {
 
     public Optional<Product> findOne(PublicId publicId){
         return productRepository.findOne(publicId);
+    }
+
+    public List<Product> findAllByPublicIdIn(List<PublicId> publicIds){
+        return productRepository.findByPublicIds(publicIds);
     }
 }
