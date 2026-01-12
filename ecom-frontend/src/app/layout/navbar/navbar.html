@@ -22,7 +22,7 @@
                          [queryParams]="{category: category.publicId}"
                          (click)="closeMenu(productsMenu)"
                          (clickOutside)="closeMenu(productsMenu)"
-                  >{{category.name}}</a></li>
+                  >{{ category.name }}</a></li>
                 }
               }
               <a href="/products">All</a>
@@ -92,7 +92,12 @@
     </div>
     <div class="dropdown dropdown-end me-2" routerLink="/cart">
       <div tabindex="0" role="button">
-        <fa-icon [icon]="['fas', 'cart-shopping']" class="menu-icon"></fa-icon>
+        <div class="indicator">
+          <span class="indicator-item badge badge-primary">
+            {{ nbItemsInCart }}
+          </span>
+          <fa-icon [icon]="['fas', 'cart-shopping']" class="menu-icon"></fa-icon>
+        </div>
       </div>
     </div>
   </div>

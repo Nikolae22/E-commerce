@@ -7,6 +7,7 @@ import { CreateProduct } from './admin/product/create-product/create-product';
 import { Home } from './home/home';
 import {ProductDetail} from './shop/product-detail/product-detail';
 import {Products} from './shop/products/products';
+import {Cart} from './shop/cart/cart';
 
 export const routes: Routes = [
     {
@@ -52,6 +53,10 @@ export const routes: Routes = [
   {
     path: 'products',
     component: Products
+  },
+  {
+    path:'cart',
+    component: Cart
   },
   {
     path: 'we',

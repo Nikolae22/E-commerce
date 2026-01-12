@@ -35,9 +35,10 @@
       </div>
       <button class="btn btn-primary mt-5 w-full lg:w-64"
               [disabled]="productQuery.data().nbInStock <=0"
+              (click)="addToCart(productQuery.data()!)"
       >
-        <fa-icon class="me-1" [icon]="['fas','shopping-card']"></fa-icon>
-        Add to cart
+        <fa-icon class="me-1" [icon]="['fas',iconAddToCart]"></fa-icon>
+        {{labelAddToCart}}
       </button>
     </div>
   </div>

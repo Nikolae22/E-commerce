@@ -7,5 +7,6 @@ export const environment={
         clientId: "Bisogna creare su kinde sia il front che il back e prendiamo quello del front",
         audience: "https://codecake.kinde.com/api"// da cambiare TODO
     },
-    apiUrl: "http://localhost:8080/api"
+    apiUrl: "http://localhost:8080/api",
+    stripePublishableKey:"323980ijdklasjda09i2oqjkella",
 }

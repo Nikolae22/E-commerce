@@ -36,5 +36,6 @@ export const appConfig: ApplicationConfig = {
   }),
   {provide: AbstractSecurityStorage, useClass: SsrStorage},
    provideQueryClient(new QueryClient())
+    // provideStripe(environment.stripePublishableKey) npm i ngx-stripe
   ]
 };

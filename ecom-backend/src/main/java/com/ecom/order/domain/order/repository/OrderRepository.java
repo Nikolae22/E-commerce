@@ -1,0 +1,7 @@
+package com.ecom.order.domain.order.repository;
+
+import com.ecom.order.domain.order.aggregate.Order;
+
+public interface OrderRepository {
+    void save(Order order);
+}

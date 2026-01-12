@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { Oauth2 } from '../../auth/oauth2';
@@ -6,6 +6,7 @@ import {UserProduct} from '../../shared/service/user-product';
 import {injectQuery} from '@tanstack/angular-query-experimental';
 import {lastValueFrom, Observable} from 'rxjs';
 import {ClickOutside} from 'ngxtension/click-outside';
+import {CartService} from '../../shop/cart-service';
 
 
 @Component({
@@ -14,9 +15,12 @@ import {ClickOutside} from 'ngxtension/click-outside';
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {
+export class Navbar implements OnInit{
   oauth2Service=inject(Oauth2);
   productService=inject(UserProduct);
+  cartService=inject(CartService)
+
+  nbItemsInCart=0
 
   connectedUserQuery=this.oauth2Service.connectedUserQuery;
 
@@ -49,6 +53,17 @@ export class Navbar {
 
   closeMenu(menu:HTMLDetailsElement){
     menu.removeAttribute('open')
+  }
+
+  ngOnInit(){
+    this.listenToCart();
+  }
+
+  private listenToCart(){
+    this.cartService.addedToCart.subscribe(productsInCart=>{
+      this.nbItemsInCart=productsInCart.reduce(
+        (acc,product)=>acc + product.quantity,0)
+    })
   }
 
 }

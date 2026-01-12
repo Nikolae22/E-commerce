@@ -49,7 +49,7 @@ spring:
     change-log: classpath:db/changelog/master.xml
     default-schema: ecommerce_yt
     contexts: dev
-  #    drop-first: true
+    drop-first: true
 #  security:
 #    oauth2:
 #      resourceserver:
@@ -85,6 +85,6 @@ application:
 #    client-id: ${KINDE_CLIENT_ID}
 #    client-secret: ${KINDE_CLIENT_SECRET}
 #    audience: https://codecake.kinde.com/api
-#  stripe:
-#    api-key: ${STRIPE_API_KEY}
-#    webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+  stripe:
+    api-key: ${STRIPE_API_KEY}
+    webhook-secret: ${STRIPE_WEBHOOK_SECRET}

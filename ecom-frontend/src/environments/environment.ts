@@ -8,5 +8,6 @@ export const environment={
        // audience: "https://codecake.kinde.com/api"// da cambiare TODO
        audience: "http://localhost:8080/api"
     },
-    apiUrl: "http://localhost:8080/api"
+    apiUrl: "http://localhost:8080/api",
+    stripePublishableKey:"323980ijdklasjda09i2oqjkella",
 }
