@@ -20,4 +20,5 @@ export interface CartItem{
 
 export interface StripeSession{
   id:string;
+  url:string
 }
