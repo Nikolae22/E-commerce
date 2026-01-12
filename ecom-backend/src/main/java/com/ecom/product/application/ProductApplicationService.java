@@ -1,5 +1,7 @@
 package com.ecom.product.application;
 
+import com.ecom.order.domain.order.aggregate.OrderProductQuantity;
+import com.ecom.order.domain.order.service.ProductUpdater;
 import com.ecom.product.domain.aggregate.Category;
 import com.ecom.product.domain.aggregate.FilterQuery;
 import com.ecom.product.domain.aggregate.Product;
@@ -21,19 +23,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProductApplicationService {
 
-    private ProductCRUD productCRUD;
-    private CategoryCRUD categoryCRUD;
-    private ProductShop productShop;
+    private final ProductCRUD productCRUD;
+    private final CategoryCRUD categoryCRUD;
+    private final ProductShop productShop;
+    private final ProductUpdater productUpdater;
 
     public ProductApplicationService(ProductRepository productRepository,
-                                     CategoryRepository categoryRepository,
-                                     ProductShop productShop) {
+                                     CategoryRepository categoryRepository
+                                     ) {
         this.productCRUD = new ProductCRUD(productRepository);
         this.categoryCRUD = new CategoryCRUD(categoryRepository);
         this.productShop=new ProductShop(productRepository);
+        this.productUpdater=new ProductUpdater(productRepository);
     }
 
     @Transactional
@@ -88,5 +91,10 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public List<Product> getProductsByPublicIdsIn(List<PublicId> publicIds){
         return productCRUD.findAllByPublicIdIn(publicIds);
+    }
+
+    @Transactional
+    public void updateProductQuantity(List<OrderProductQuantity> orderProductQuantities){
+        productUpdater.updateProductQuantity(orderProductQuantities);
     }
 }

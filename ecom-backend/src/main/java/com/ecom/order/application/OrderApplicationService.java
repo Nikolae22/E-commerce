@@ -1,11 +1,10 @@
 package com.ecom.order.application;
 
-import com.ecom.order.domain.order.aggregate.DetailCartItemRequest;
-import com.ecom.order.domain.order.aggregate.DetailCartRequest;
-import com.ecom.order.domain.order.aggregate.DetailCartResponse;
+import com.ecom.order.domain.order.aggregate.*;
 import com.ecom.order.domain.order.repository.OrderRepository;
 import com.ecom.order.domain.order.service.CartReader;
 import com.ecom.order.domain.order.service.OrderCreator;
+import com.ecom.order.domain.order.service.OrderUpdater;
 import com.ecom.order.domain.order.vo.StripeSessionId;
 import com.ecom.order.domain.user.aggregate.User;
 import com.ecom.order.infrastructure.secondry.service.stripe.StripeService;
@@ -23,10 +22,12 @@ public class OrderApplicationService {
     private final CartReader cartReader;
     private final UsersApplicationService usersApplicationService;
     private final OrderCreator orderCreator;
+    private final OrderUpdater orderUpdater;
 
-    public OrderApplicationService(ProductApplicationService productApplicationService, UsersApplicationService usersApplicationService,OrderRepository orderRepository, StripeService stripeService) {
+    public OrderApplicationService(ProductApplicationService productApplicationService, UsersApplicationService usersApplicationService, OrderRepository orderRepository, StripeService stripeService) {
         this.productApplicationService = productApplicationService;
         this.usersApplicationService = usersApplicationService;
+        this.orderUpdater = new OrderUpdater(orderRepository);
         this.orderCreator = new OrderCreator(orderRepository, stripeService);
         this.cartReader = new CartReader();
     }
@@ -43,6 +44,16 @@ public class OrderApplicationService {
         User autheniticatedUser = usersApplicationService.getAutheniticatedUser();
         List<PublicId> publicIdS = items.stream().map(DetailCartItemRequest::publicId).toList();
         List<Product> productInformation = productApplicationService.getProductsByPublicIdsIn(publicIdS);
-        return orderCreator.create(productInformation,items,autheniticatedUser);
+        return orderCreator.create(productInformation, items, autheniticatedUser);
+    }
+
+    @Transactional
+    public void updateOrder(StripeSessionInformation stripeSessionInformation) {
+        List<OrderedProduct> orderedProducts = this.orderUpdater.updateOrderFromStripe(stripeSessionInformation);
+        List<OrderProductQuantity> orderProductQuantities = this.orderUpdater.computeQuantity(orderedProducts);
+        this.productApplicationService.updateProductQuantity(orderProductQuantities);
+        this.usersApplicationService.updateAddress(stripeSessionInformation.userAddress());
+
+
     }
 }

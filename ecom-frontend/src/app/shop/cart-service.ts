@@ -128,4 +128,10 @@ export class CartService {
     }
   }
 
+  clearCart() {
+    if (isPlatformBrowser(this.platformId)){
+       localStorage.removeItem(this.keyStorage);
+       this.addToCart$.next([]);
+    }
+  }
 }
