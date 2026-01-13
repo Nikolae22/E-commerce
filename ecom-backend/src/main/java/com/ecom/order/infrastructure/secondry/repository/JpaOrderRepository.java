@@ -2,6 +2,8 @@ package com.ecom.order.infrastructure.secondry.repository;
 
 import com.ecom.order.domain.order.vo.OrderStatus;
 import com.ecom.order.infrastructure.secondry.entity.OrderEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +19,7 @@ public interface JpaOrderRepository extends JpaRepository<OrderEntity,Long> {
                                 UUID orderPublicId);
 
     Optional<OrderEntity> findByStripeSessionId(String stripeSessionId);
+
+    Page<OrderEntity> findAllByUserPublicId(UUID userPublicId, Pageable pageable);
 
 }

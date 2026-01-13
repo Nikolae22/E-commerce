@@ -1,4 +1,4 @@
-package com.ecom.order.domain.order.service;
+package com.ecom.product.domain.service;
 
 import com.ecom.order.domain.order.aggregate.OrderProductQuantity;
 import com.ecom.product.domain.repository.ProductRepository;

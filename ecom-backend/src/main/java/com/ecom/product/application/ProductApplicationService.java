@@ -1,7 +1,7 @@
 package com.ecom.product.application;
 
 import com.ecom.order.domain.order.aggregate.OrderProductQuantity;
-import com.ecom.order.domain.order.service.ProductUpdater;
+import com.ecom.product.domain.service.ProductUpdater;
 import com.ecom.product.domain.aggregate.Category;
 import com.ecom.product.domain.aggregate.FilterQuery;
 import com.ecom.product.domain.aggregate.Product;
@@ -10,9 +10,7 @@ import com.ecom.product.domain.repository.ProductRepository;
 import com.ecom.product.domain.service.CategoryCRUD;
 import com.ecom.product.domain.service.ProductCRUD;
 import com.ecom.product.domain.service.ProductShop;
-import com.ecom.product.domain.vo.ProductSize;
 import com.ecom.product.domain.vo.PublicId;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

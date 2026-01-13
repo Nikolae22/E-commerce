@@ -9,6 +9,8 @@ import {ProductDetail} from './shop/product-detail/product-detail';
 import {Products} from './shop/products/products';
 import {Cart} from './shop/cart/cart';
 import {CartSuccess} from './shop/cart-success/cart-success';
+import {UserOrders} from './user/user-orders/user-orders';
+import {AdminOrders} from './admin/admin-orders/admin-orders';
 
 export const routes: Routes = [
   {
@@ -30,6 +32,14 @@ export const routes: Routes = [
   {
     path: 'admin/products/list',
     component: AdminProduct,
+    canActivate: [roleCheckGuard],
+    data: {
+      authorities: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: 'admin/orders/list',
+    component: AdminOrders,
     canActivate: [roleCheckGuard],
     data: {
       authorities: ['ROLE_ADMIN']
@@ -62,6 +72,10 @@ export const routes: Routes = [
   {
     path: 'cart/success',
     component: CartSuccess
+  },
+  {
+    path:'users/order',
+    component: UserOrders
   },
   {
     path: 'we',

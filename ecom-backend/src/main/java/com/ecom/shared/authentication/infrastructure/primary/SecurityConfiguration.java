@@ -22,6 +22,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET,"api/products-shop/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"api/orders/get-cart-details").permitAll()
                         .requestMatchers(HttpMethod.GET,"api/orders/webhook").permitAll()
+                        .requestMatchers(HttpMethod.GET,"api/users/**").permitAll()
                         .requestMatchers("/api/**").authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2ResourceServer(oauth2->oauth2.jwt(
